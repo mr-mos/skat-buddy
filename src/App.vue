@@ -4,9 +4,10 @@
 
     <div v-for="(color,colorIndex) in cardColors" style="display: flex;"
          :key="colorIndex">
-        <div v-for="(type,typeIndex) in cardTypes" style="flex:1; margin:5px"
-           :key="typeIndex">
-          <Card :name="type+'_'+color"/>
+        <div v-for="(cardDef,cardNumber) in cardValues" style="flex:1; margin:5px"
+           :key="cardNumber">
+            {{cardNumber}} ({{cardDef.scoreValue}}) &nbsp; {{color.name}} ({{color.baseValue}})
+         <Card :color="color.name" :cardValue="cardNumber"/>
         </div>
     </div>
 
@@ -19,6 +20,7 @@
 <script>
 
 import Card from "@/components/Card";
+import {cardColors, cardValues} from "@/assets/js/data";
 
 export default {
   name: 'App',
@@ -27,8 +29,8 @@ export default {
   },
   data() {
     return {
-      cardColors: ['club', 'spade', 'heart', 'diamond'],
-      cardTypes: ['7', '8', '9', '10', 'jack', 'queen', 'king', 'ace']
+      cardColors,
+      cardValues
     }
   }
 }

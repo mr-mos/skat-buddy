@@ -10,11 +10,11 @@
 
 export default {
   name: 'Card',
-  props: ['name'],
+  props: ['color','cardValue'],
   methods: {},
   computed: {
     imagePath() {
-      return require("@/assets/cards/"+this.name+".svg")
+      return require("@/assets/cards/"+this.cardValue+"_"+this.color+".svg")
     }
   }
 }
