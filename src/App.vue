@@ -2,14 +2,10 @@
 
   <div id="screen">
 
-    <div v-for="(color,colorIndex) in cardColors" style="display: flex;"
-         :key="colorIndex">
-        <div v-for="(cardDef,cardNumber) in cardValues" style="flex:1; margin:5px"
-           :key="cardNumber">
-            {{cardNumber}} ({{cardDef.scoreValue}}) &nbsp; {{color.name}} ({{color.baseValue}})
-         <Card :color="color.name" :cardValue="cardNumber"/>
-        </div>
-    </div>
+    <StatusBar :cards="cards"/>
+
+    <CardTable :cards="cards"/>
+
 
   </div>
 
@@ -19,18 +15,19 @@
 
 <script>
 
-import Card from "@/components/Card";
-import {cardColors, cardValues} from "@/assets/js/data";
+import { store } from "@/assets/js/store";
+import StatusBar from "@/components/StatusBar";
+import CardTable from "@/components/CardTable";
 
 export default {
   name: 'App',
   components: {
-    Card
+    CardTable,
+    StatusBar
   },
   data() {
     return {
-      cardColors,
-      cardValues
+      cards : store.cards
     }
   }
 }

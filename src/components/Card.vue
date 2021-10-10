@@ -10,11 +10,11 @@
 
 export default {
   name: 'Card',
-  props: ['color','cardValue'],
+  props: ['card'],
   methods: {},
   computed: {
     imagePath() {
-      return require("@/assets/cards/"+this.cardValue+"_"+this.color+".svg")
+      return require("@/assets/cards/"+this.card.value+"_"+this.card.color+".svg")
     }
   }
 }
@@ -26,7 +26,7 @@ export default {
 <style scoped>
 
 .playingCard {
-  max-width: 300px;
+  max-width: 220px;
   margin-left:auto;
   margin-right: auto;
 }
