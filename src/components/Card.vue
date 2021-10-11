@@ -26,13 +26,12 @@ export default {
 <style scoped>
 
 .playingCard {
-  max-width: 220px;
-  margin-left:auto;
-  margin-right: auto;
+  height: 100%;     /* responsive scale of images in height (part 2)*/
 }
 
 .playingCard img {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 </style>

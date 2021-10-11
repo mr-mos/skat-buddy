@@ -1,14 +1,9 @@
 <template>
 
-  <div>
-
-    <small>{{ label }}</small>
-    <div class="row">
-      <div v-for="(card,index) in rowCards" :key="index" class="rowEntry">
-        <Card :card="card" />
-      </div>
+  <div class="row">
+    <div v-for="(card,index) in rowCards" :key="index" class="rowEntry">
+      <Card :card="card"/>
     </div>
-
   </div>
 
 </template>
@@ -22,18 +17,14 @@ import Card from "@/components/Card";
 export default {
 
   name: 'CardRow',
-  props: ['rowCards','label'],
+  props: ['rowCards'],
   components: {
     Card
   },
   data() {
-    return {
-
-    }
+    return {}
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {}
 
 }
@@ -45,18 +36,20 @@ export default {
 <style scoped>
 
 .row {
+  flex-grow: 1;
+  padding: 0 5px;
+
   display: flex;
   background-color: #dddddd;
-}
-.rowEntry {
-  flex: 1;
-  margin: 5px;
+  column-gap: 5px;
+
+  height: 50px;     /* responsive scale of images in height (part 1)*/
 }
 
-small {
-  display: block;
-  background-color: #eeeeee;
-  margin-top: 5px
+.rowEntry {
+  /*flex-grow: 1;*/  /* cards gleichverteilt over the whole row */
+                     /* TODO firefox bug:  there is a space between cards, which isn't there in chrome */
 }
+
 
 </style>

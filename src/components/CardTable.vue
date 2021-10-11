@@ -1,16 +1,31 @@
 <template>
 
-  <div class="cardTable">
+  <div id="cardTable">
 
-    <CardRow label="Trumpf" v-bind:row-cards="trumpCards"  />
+    <div class="rowLabel">
+      Trumpf
+    </div>
+    <CardRow v-bind:row-cards="trumpCards"  />
 
-    <CardRow label="Kreuz" :row-cards="clubCards"  />
+    <div class="rowLabel">
+      Kreuz
+    </div>
+    <CardRow :row-cards="clubCards"  />
 
-    <CardRow label="Pik" :row-cards="spadeCards"  />
+    <div class="rowLabel">
+      Pik
+    </div>
+    <CardRow :row-cards="spadeCards"  />
 
-    <CardRow label="Herz" :row-cards="heartCards"  />
+    <div class="rowLabel">
+      Herz
+    </div>
+    <CardRow :row-cards="heartCards"  />
 
-    <CardRow label="Karo" :row-cards="diamondCards"  />
+    <div class="rowLabel">
+      Karo
+    </div>
+    <CardRow :row-cards="diamondCards"  />
 
   </div>
 
@@ -61,5 +76,23 @@ export default {
 
 <style scoped>
 
+#cardTable {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column; /* top to bottom;  instead of left to right */
+  justify-content: center; /* top to bottom alignment  (alignment main-axis) */
+  align-items: stretch; /* left to right alignment  (alignment cross-axis) */
+  align-content: normal;
+  row-gap: 1px;
+
+}
+
+.rowLabel {
+  background-color: #eeeeee;
+  font-size: 90%;
+  margin-top: 5px;
+  padding: 0 10px;
+}
 
 </style>
