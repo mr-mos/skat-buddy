@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.outerFlex {
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+		}
+
+		.flex-container {
+			/* for this flex-child of outerFlex */
+			flex-grow: 1;
+
+			/* for children */
+			display: flex;
+			flex-direction: column; /* top to bottom;  instead of left to right */
+			justify-content: center; /* top to bottom alignment  (alignment main-axis) */
+			align-items: stretch; /* left to right alignment  (alignment cross-axis) */
+			align-content: normal;
+			gap: 5px 30px;
+
+			background-color: DodgerBlue;
+		}
+
+		.flex-container > div {
+			background-color: #f1f1f1;
+			margin: 10px;
+			padding: 20px;
+			font-size: 30px;
+
+			flex-grow: 1;
+			flex-shrink: 1;
+		}
+
+		.flex-container #one {
+			order: 1;
+		}
+
+		.flex-container #two {
+			order: 2;
+		}
+
+		.flex-container #three {
+			order: 3;
+		}
+
+		.centeritParent {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.centerit {
+			width: 100px;
+			height: 100px;
+			background-color: aliceblue;
+            /* center text in element;  (element is already center becuase of centeritParent) */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+
+	</style>
+	<title> Flex Demo </title>
+</head>
+<body>
+
+<div class="outerFlex">
+
+	<h1>Container</h1>
+
+	<div class="flex-container">
+		<div id="one">1</div>
+		<div id="two" class="centeritParent">
+			<div class="centerit">
+				2
+			</div>
+		</div>
+		<div id="three">3</div>
+	</div>
+
+
+</div>
+
+
+</body>
+</html>
