@@ -3,8 +3,8 @@
   <div class="statusBar">
 
     <div class="noWrap paddingRight">
-      <span>Status: &nbsp;</span>
-      <div v-if="status == PlayStatus.SELECT_MY_CARDS">
+      <span @click="update()">Status: &nbsp;</span>
+      <div v-if="store.status == PlayStatus.SELECT_MY_CARDS">
         Wähle Deine 10 Karten...
       </div>
       <div v-else="" class="error">
@@ -42,19 +42,19 @@ export default {
     return {
       PlayStatus,
       Player,
-      cards :  store.cards,
-      status: store.status
+      store : store
     }
   },
   methods: {
     moreCss(player) {
       return player === store.player ? 'selected' : '';
     },
-    // update() {
-    //   this.$forceUpdate();
-    // },
+    update() {
+      this.$forceUpdate();
+      alert("forceUpdate clicked. Status: "+store.status);
+    },
     countKnownCards(player) {
-      return this.cards.filter( card => card.owner === player).length;
+      return store.cards.filter( card => card.owner === player).length;
     }
   },
   computed: {

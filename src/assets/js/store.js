@@ -29,14 +29,30 @@ export const storeFunctions = {
 		if (card.owner) {
 			// delete owner
 			card.owner = null;
-			return;
+		} else {
+			switch (store.status) {
+				case PlayStatus.SELECT_MY_CARDS:
+					card.owner = store.player;
+					break;
+				default:
+					alert("cardClickedAction not defined for status '"+store.statusName()+"' and card: "+card.name());
+			}
 		}
+		internalFunctions.checkStatus();
+	}
+
+}
+
+
+const internalFunctions = {
+
+	checkStatus() {
 		switch (store.status) {
 			case PlayStatus.SELECT_MY_CARDS:
-				card.owner = store.player;
+				if (store.cards.filter( card => card.owner).length == 10) {
+					store.status = PlayStatus.SELECT_PLAYER;
+				}
 				break;
-			default:
-				alert("cardClickedAction not defined for status '"+store.statusName()+"' and card: "+card.name());
 		}
 	}
 }
