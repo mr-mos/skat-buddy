@@ -43,6 +43,20 @@ export const storeFunctions = {
 			}
 		}
 		internalFunctions.checkStatus();
+	},
+
+	/////////////// Player stuff ////////////////////
+
+	countPlayerCars(player) {
+		return store.cards.filter(card => card.owner === player).length;
+	},
+
+	isActivePlayer(player) {
+		return player === store.player
+	},
+
+	getPlayersName(player) {
+		return Object.keys(Player).find(key => Player[key] === player)
 	}
 
 }

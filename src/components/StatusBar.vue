@@ -14,15 +14,9 @@
 
     <div class="noWrap">
       <span>Spieler: </span>
-      <div class="leftPlayer box" :class="moreCss(Player.LEFT)">
-        Links ({{countKnownCards(Player.LEFT)}})
-      </div>
-      <div class="mePlayer box" :class="moreCss(Player.ME)">
-        Ich ({{countKnownCards(Player.ME)}})
-      </div>
-      <div class="rightPlayer box" :class="moreCss(Player.RIGHT)">
-        Rechts ({{countKnownCards(Player.RIGHT)}})
-      </div>
+      <StatusBarPlayer :player-def="Player.LEFT" />
+      <StatusBarPlayer :player-def="Player.ME" />
+      <StatusBarPlayer :player-def="Player.RIGHT" />
     </div>
 
   </div>
@@ -34,27 +28,24 @@
 <script>
 
 import {Player, PlayStatus} from '@/assets/js/definitions';
-import {store} from "@/assets/js/store";
+import StatusBarPlayer from "@/components/StatusBarPlayer";
 
 export default {
   name: 'Statusbar',
+  props: ['store'],
+  components: {
+    StatusBarPlayer
+  },
   data() {
     return {
       PlayStatus,
-      Player,
-      store : store
+      Player
     }
   },
   methods: {
-    moreCss(player) {
-      return player === store.player ? 'selected' : '';
-    },
     update() {
       this.$forceUpdate();
-      alert("forceUpdate clicked. Status: "+store.status);
-    },
-    countKnownCards(player) {
-      return store.cards.filter( card => card.owner === player).length;
+      alert("forceUpdate clicked. Status: "+this.store.status);
     }
   },
   computed: {
@@ -89,19 +80,11 @@ export default {
   padding-right: 20px;
 }
 
-.box {
-  padding: 6px 15px;
-  margin: 0 5px;
-}
 
 .error {
   font-weight: bold;
   color: lightcoral;
 }
 
-.selected {
-  border: 2px solid red;
-  color: red;
-}
 
 </style>
