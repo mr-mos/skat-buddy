@@ -11,6 +11,10 @@ export const store = {
 
 	statusName() {
 		return Object.keys(PlayStatus).find(key => PlayStatus[key] === this.status)
+	},
+
+	cardsOwnedCount() {
+		return this.cards.filter( card => card.owner).length
 	}
 
 
@@ -49,8 +53,13 @@ const internalFunctions = {
 	checkStatus() {
 		switch (store.status) {
 			case PlayStatus.SELECT_MY_CARDS:
-				if (store.cards.filter( card => card.owner).length == 10) {
+				if (store.cardsOwnedCount() == 10) {
 					store.status = PlayStatus.SELECT_PLAYER;
+				}
+				break;
+			case PlayStatus.SELECT_PLAYER:
+				if (store.cardsOwnedCount() < 10) {
+					store.status = PlayStatus.SELECT_MY_CARDS;
 				}
 				break;
 		}
