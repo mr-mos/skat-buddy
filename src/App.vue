@@ -2,9 +2,10 @@
 
   <div id="screen">
 
-    <StatusBar :cards="cards"/>
 
-    <CardTable :cards="cards"/>
+    <StatusBar :store="this.store"/>
+
+    <CardTable :cards="this.store.cards"/>
 
 
   </div>
@@ -27,7 +28,7 @@ export default {
   },
   data() {
     return {
-      cards : store.cards
+      store
     }
   }
 }

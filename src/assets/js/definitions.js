@@ -1,16 +1,35 @@
-export {PlayingCard, createNewPlayingCards};
+export {PlayingCard, createNewPlayingCards, PlayStatus, Player};
+
+const PlayStatus = Object.freeze(
+	{
+		"SELECT_MY_CARDS" : 1,
+		"SELECT_PLAYER": 2
+	}
+)
+
+const Player = Object.freeze(
+	{
+		"LEFT": 1,
+		"ME": 2,
+		"RIGHT": 3
+	}
+)
 
 class PlayingCard {
 	constructor(color, value) {
 		this.color = color;
 		this.value = value;
 		this.reset();
-		Object.seal(this);
+		//  Object.seal(this);      CAUTION:  This breaks the reactivity in Vue.js if used as data in components
 	}
 
 	reset() {
 		this.owner = null;
 		this.trump = false;
+	}
+
+	name() {
+		return this.color+" "+this.value;
 	}
 }
 

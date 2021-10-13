@@ -5,27 +5,27 @@
     <div class="rowLabel">
       Trumpf
     </div>
-    <CardRow v-bind:row-cards="trumpCards"  />
+    <CardRow v-bind:row-cards="trumpCards"/>
 
     <div class="rowLabel">
       Kreuz
     </div>
-    <CardRow :row-cards="clubCards"  />
+    <CardRow :row-cards="clubCards"/>
 
     <div class="rowLabel">
       Pik
     </div>
-    <CardRow :row-cards="spadeCards"  />
+    <CardRow :row-cards="spadeCards"/>
 
     <div class="rowLabel">
       Herz
     </div>
-    <CardRow :row-cards="heartCards"  />
+    <CardRow :row-cards="heartCards"/>
 
     <div class="rowLabel">
       Karo
     </div>
-    <CardRow :row-cards="diamondCards"  />
+    <CardRow :row-cards="diamondCards"/>
 
   </div>
 
@@ -46,24 +46,23 @@ export default {
   },
   data() {
     return {
-
     }
   },
   computed: {
     trumpCards() {
-      return this.cards.filter( card => card.trump)
+      return this.cards.filter(card => card.trump)
     },
     clubCards() {
-      return this.cards.filter( card => card.color === "club")
+      return this.cards.filter(card => card.color === "club" && !card.trump)
     },
     spadeCards() {
-      return this.cards.filter( card => card.color === "spade")
+      return this.cards.filter(card => card.color === "spade" && !card.trump)
     },
     heartCards() {
-      return this.cards.filter( card => card.color === "heart")
+      return this.cards.filter(card => card.color === "heart" && !card.trump)
     },
     diamondCards() {
-      return this.cards.filter( card => card.color === "diamond")
+      return this.cards.filter(card => card.color === "diamond" && !card.trump)
     }
   },
   methods: {}
