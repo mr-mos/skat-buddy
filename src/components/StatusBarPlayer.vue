@@ -1,6 +1,6 @@
 <template>
 
-  <div class="box" :class="moreCss(playerDef)">
+  <div class="box" :class="moreCss(playerDef)" @click="playerClicked()">
     {{ playerText[playerName] }} ({{ countKnownCards(playerDef) }})
   </div>
 
@@ -15,7 +15,7 @@ import {storeFunctions} from "@/assets/js/store";
 
 export default {
   name: 'Statusbar',
-  props: ['playerDef'],
+  props: ['playerDef','clickable'],
   data() {
     return {
       Player,
@@ -26,11 +26,17 @@ export default {
   methods: {
     moreCss(player) {
       let cssDefs = storeFunctions.isActivePlayer(player) ? 'selected ' : '';
-      cssDefs += this.playerName.toLowerCase() +"Player";
+      cssDefs += this.playerName.toLowerCase() +"Player ";
+      if (this.clickable) {
+        cssDefs += "clickable";
+      }
       return cssDefs
     },
     countKnownCards(player) {
       return storeFunctions.countPlayerCars(player);
+    },
+    playerClicked() {
+      storeFunctions.playerClickedAction(this.playerDef);
     }
   },
   computed: {}
@@ -43,14 +49,11 @@ export default {
 <style scoped>
 
 
-.box {
-  padding: 6px 15px;
-  margin: 0 5px;
-}
-
 .selected {
   border: 2px solid red;
   color: red;
 }
+
+
 
 </style>

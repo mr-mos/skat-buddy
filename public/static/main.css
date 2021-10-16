@@ -10,33 +10,38 @@ body {
 	background-color: #da87da;
 	color: black;
 }
-.leftCardFilter {
-	filter: invert(77%) sepia(66%) saturate(545%) hue-rotate(246deg) brightness(87%) contrast(95%);
-	border: 1px solid #da87da;
-	box-sizing: border-box;
-}
 
 
 .mePlayer {
 	background-color: lightgreen;
 	color: black;
 }
-.meCardFilter {
-	filter: sepia(30%) saturate(635%) hue-rotate(60deg) brightness(101%) contrast(87%);
-	border: 1px solid lightgreen;
-	box-sizing: border-box;
-}
 
 .rightPlayer {
 	background-color: lightblue;
 	color: black;
 }
-.rightCardFilter {
-	filter: invert(86%) sepia(24%) saturate(331%) hue-rotate(157deg) brightness(92%) contrast(96%);
-	border: 1px solid lightblue;
-	box-sizing: border-box;
-}
 
 .noWrap {
 	white-space: nowrap;
+}
+
+.clickable {
+	cursor: pointer;
+	border:1px solid #EEE;
+	box-shadow: 2px 2px #AAA;
+}
+
+.clickable:hover {
+	border:1px solid yellow;
+}
+
+.clickable:active {
+	box-shadow: inset 0px 0px 5px yellow;
+	outline: none;
+}
+
+.box {
+	padding: 6px 15px;
+	margin: 0 5px;
 }

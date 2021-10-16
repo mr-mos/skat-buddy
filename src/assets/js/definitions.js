@@ -3,7 +3,10 @@ export {PlayingCard, createNewPlayingCards, PlayStatus, Player};
 const PlayStatus = Object.freeze(
 	{
 		"SELECT_MY_CARDS" : 1,
-		"SELECT_PLAYER": 2
+		"SELECT_PLAYER": 2,
+		"OPEN_SKAT": 3,
+		"CLOSE_SKAT": 4,
+		"PLAY" : 5
 	}
 )
 
@@ -26,6 +29,7 @@ class PlayingCard {
 	reset() {
 		this.owner = null;
 		this.trump = false;
+		this.played = false;
 	}
 
 	name() {

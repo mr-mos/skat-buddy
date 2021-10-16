@@ -4,19 +4,40 @@
 
     <div class="noWrap paddingRight">
       <span @click="update()">Status: &nbsp;</span>
-      <div v-if="store.status == PlayStatus.SELECT_MY_CARDS">
+      <div v-if="store.status === PlayStatus.SELECT_MY_CARDS">
         Wähle Deine 10 Karten...
+      </div>
+      <div v-else-if="store.status === PlayStatus.SELECT_PLAYER">
+        Wer ist Alleinspieler ?
+      </div>
+      <div v-else-if="store.status === PlayStatus.OPEN_SKAT">
+        unten Skat auswählen oder
+      </div>
+      <div v-else-if="store.status === PlayStatus.CLOSE_SKAT">
+        zwei Skat-Karten drücken
+      </div>
+      <div v-else-if="store.status === PlayStatus.PLAY">
+        Gespielte Karten klicken ...
       </div>
       <div v-else="" class="error">
         Unbekannt!
       </div>
     </div>
 
+    <div class="noWrap paddingRight">
+        <div v-if="store.status == PlayStatus.OPEN_SKAT && storeFunctions.countPlayerCars(Player.ME) == 10">
+          <div class="box clickable handButton"  @click="storeFunctions.handGameClicked()">
+            Hand-Spiel
+          </div>
+
+        </div>
+    </div>
+
     <div class="noWrap">
       <span>Spieler: </span>
-      <StatusBarPlayer :player-def="Player.LEFT" />
-      <StatusBarPlayer :player-def="Player.ME" />
-      <StatusBarPlayer :player-def="Player.RIGHT" />
+      <StatusBarPlayer :player-def="Player.LEFT" :clickable="choosePlayer" />
+      <StatusBarPlayer :player-def="Player.ME" :clickable="choosePlayer" />
+      <StatusBarPlayer :player-def="Player.RIGHT" :clickable="choosePlayer" />
     </div>
 
   </div>
@@ -28,6 +49,7 @@
 <script>
 
 import {Player, PlayStatus} from '@/assets/js/definitions';
+import {storeFunctions} from '@/assets/js/store';
 import StatusBarPlayer from "@/components/StatusBarPlayer";
 
 export default {
@@ -39,7 +61,8 @@ export default {
   data() {
     return {
       PlayStatus,
-      Player
+      Player,
+      storeFunctions
     }
   },
   methods: {
@@ -49,7 +72,9 @@ export default {
     }
   },
   computed: {
-
+    choosePlayer() {
+      return [PlayStatus.SELECT_PLAYER].includes(this.store.status);
+    }
   }
 }
 
@@ -69,7 +94,7 @@ export default {
 
 .statusBar div {
   display: inline-block;
-  padding-top: 3px;
+  padding-top: 2px;
 }
 
 .statusBar .noWrap div {
@@ -80,6 +105,10 @@ export default {
   padding-right: 20px;
 }
 
+.handButton {
+  background-color: #a03e3e;
+  color: white;
+}
 
 .error {
   font-weight: bold;
