@@ -17,8 +17,12 @@ export const store = {
 		return Object.keys(PlayStatus).find(key => PlayStatus[key] === this.status)
 	},
 
-	cardsOwnedCount() {
-		return this.cards.filter(card => card.owner).length
+	cardsOwnedCount(player) {
+		return this.cards.filter(card => card.owner === player).length
+	},
+
+	cardsPlayedCount(player) {
+		return this.cards.filter(card => card.owner === player && card.played).length
 	}
 
 
@@ -99,13 +103,13 @@ const internalFunctions = {
 	checkStatus() {
 		switch (store.status) {
 			case PlayStatus.SELECT_MY_CARDS:
-				if (store.cardsOwnedCount() == 10) {
+				if (store.cardsOwnedCount(Player.ME) == 10) {
 					store.status = PlayStatus.SELECT_PLAYER;
 					store.player = null;
 				}
 				break;
 			case PlayStatus.SELECT_PLAYER:
-				if (store.cardsOwnedCount() < 10) {
+				if (store.cardsOwnedCount(Player.ME) < 10) {
 					console.log("Going back to SELECT_MY_CARDS status...")
 					store.status = PlayStatus.SELECT_MY_CARDS;
 					store.player = Player.ME;
@@ -120,8 +124,14 @@ const internalFunctions = {
 				}
 				break;
 			case PlayStatus.OPEN_SKAT:
-				if (store.cardsOwnedCount() == 12) {
+				if (store.cardsOwnedCount(Player.ME) == 12) {
 					store.status = PlayStatus.CLOSE_SKAT;
+				}
+				break;
+			case PlayStatus.CLOSE_SKAT:
+				if (store.cardsPlayedCount(Player.ME) == 2) {
+					store.status = PlayStatus.PLAY;
+					store.player = store.firstSeatPlayer;
 				}
 				break;
 		}
