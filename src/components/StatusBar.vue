@@ -2,27 +2,11 @@
 
   <div class="statusBar">
 
+
     <div class="noWrap paddingRight">
-      <span @click="update()">Status: &nbsp;</span>
-      <div v-if="store.status === PlayStatus.SELECT_MY_CARDS">
-        Wähle Deine 10 Karten...
-      </div>
-      <div v-else-if="store.status === PlayStatus.SELECT_PLAYER">
-        Wer ist Alleinspieler ?
-      </div>
-      <div v-else-if="store.status === PlayStatus.OPEN_SKAT">
-        unten Skat auswählen oder
-      </div>
-      <div v-else-if="store.status === PlayStatus.CLOSE_SKAT">
-        zwei Skat-Karten drücken
-      </div>
-      <div v-else-if="store.status === PlayStatus.PLAY">
-        Gespielte Karten klicken ...
-      </div>
-      <div v-else="" class="error">
-        Unbekannt!
-      </div>
+      <StatusBarText :store="store" />
     </div>
+
 
     <div class="noWrap paddingRight">
         <div v-if="store.status == PlayStatus.OPEN_SKAT && storeFunctions.countPlayerCars(Player.ME) == 10">
@@ -48,27 +32,23 @@
 
 <script>
 
-import {Player, PlayStatus} from '@/assets/js/definitions';
+import {Player, PlayStatus } from '@/assets/js/definitions';
 import {storeFunctions} from '@/assets/js/store';
 import StatusBarPlayer from "@/components/StatusBarPlayer";
+import StatusBarText from "@/components/StatusBarText";
 
 export default {
   name: 'Statusbar',
   props: ['store'],
   components: {
+    StatusBarText,
     StatusBarPlayer
   },
   data() {
     return {
-      PlayStatus,
       Player,
+      PlayStatus,
       storeFunctions
-    }
-  },
-  methods: {
-    update() {
-      this.$forceUpdate();
-      alert("forceUpdate clicked. Status: "+this.store.status);
     }
   },
   computed: {
@@ -97,10 +77,6 @@ export default {
   padding-top: 2px;
 }
 
-.statusBar .noWrap div {
-  font-weight: bold;
-}
-
 .paddingRight {
   padding-right: 20px;
 }
@@ -110,10 +86,6 @@ export default {
   color: white;
 }
 
-.error {
-  font-weight: bold;
-  color: lightcoral;
-}
 
 
 </style>

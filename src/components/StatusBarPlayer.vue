@@ -1,6 +1,6 @@
 <template>
 
-  <div class="box" :class="moreCss(playerDef)" @click="playerClicked()">
+  <div class="box bold" :class="moreCss(playerDef)" @click="playerClicked()">
     {{ playerText[playerName] }} ({{ countKnownCards(playerDef) }})
   </div>
 
