@@ -2,11 +2,12 @@ export {PlayingCard, createNewPlayingCards, PlayStatus, Player};
 
 const PlayStatus = Object.freeze(
 	{
-		"SELECT_MY_CARDS" : 1,
-		"SELECT_PLAYER": 2,
-		"OPEN_SKAT": 3,
-		"CLOSE_SKAT": 4,
-		"PLAY" : 5
+		"SELECT_FIRST_SEAT": 1,
+		"SELECT_MY_CARDS" : 2,
+		"SELECT_PLAYER": 3,
+		"OPEN_SKAT": 4,
+		"CLOSE_SKAT": 5,
+		"PLAY" : 6
 	}
 )
 

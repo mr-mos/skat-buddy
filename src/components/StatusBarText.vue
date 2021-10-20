@@ -4,7 +4,10 @@
 
     <span @click="update()">Status: &nbsp;</span>
     <div class="bold">
-      <template v-if="store.status === PlayStatus.SELECT_MY_CARDS">
+      <template v-if="store.status === PlayStatus.SELECT_FIRST_SEAT">
+        Welcher Spieler ist Vorhand ?
+      </template>
+      <template v-else-if="store.status === PlayStatus.SELECT_MY_CARDS">
         Wähle Deine 10 Karten...
       </template>
       <template v-else-if="store.status === PlayStatus.SELECT_PLAYER">

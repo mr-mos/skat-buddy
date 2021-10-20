@@ -3,13 +3,13 @@ import {createNewPlayingCards, Player, PlayStatus} from "@/assets/js/definitions
 
 export const store = {
 
-	status: PlayStatus.SELECT_MY_CARDS,
+	status: PlayStatus.SELECT_FIRST_SEAT,
 
-	player: Player.ME,            // how needs to do an action currently
+	player: null,            // how needs to do an action currently
 
 	soloPlayer: null,             // "Alleinspieler" in current round
 
-	firstSeatPlayer: Player.RIGHT,  // FIXME  "Vorhand"
+	firstSeatPlayer: null,
 
 	cards: createNewPlayingCards(),
 
@@ -55,9 +55,9 @@ export const storeFunctions = {
 				}
 				break;
 			case PlayStatus.CLOSE_SKAT:
-					if (card.owner === Player.ME) {
-						card.played = true;
-					}
+				if (card.owner === Player.ME) {
+					card.played = true;
+				}
 				break;
 			default:
 				alert("cardClickedAction not defined for status '" + store.statusName() + "' and card: " + card.name());
@@ -70,6 +70,9 @@ export const storeFunctions = {
 			case PlayStatus.SELECT_PLAYER:
 				store.soloPlayer = player;
 				break;
+			case PlayStatus.SELECT_FIRST_SEAT:
+				store.firstSeatPlayer = player;
+				break;
 			default:
 				alert("playerClickedAction not defined for status '" + store.statusName() + "' and player: " + this.getPlayersName(player));
 		}
@@ -77,7 +80,7 @@ export const storeFunctions = {
 	},
 
 	handGameClicked() {
-		store.status = PlayStatus.PLAY;
+		internalFunctions.setPlayStatus();
 	},
 
 
@@ -106,6 +109,12 @@ const internalFunctions = {
 
 	checkStatus() {
 		switch (store.status) {
+			case PlayStatus.SELECT_FIRST_SEAT:
+				if (store.firstSeatPlayer != null) {
+					store.status = PlayStatus.SELECT_MY_CARDS;
+					store.player = Player.ME;
+				}
+				break;
 			case PlayStatus.SELECT_MY_CARDS:
 				if (store.cardsOwnedCount(Player.ME) == 10) {
 					store.status = PlayStatus.SELECT_PLAYER;
@@ -122,8 +131,7 @@ const internalFunctions = {
 						store.status = PlayStatus.OPEN_SKAT;
 						store.player = Player.ME;
 					} else {
-						store.status = PlayStatus.PLAY;
-						store.player = store.firstSeatPlayer;
+						this.setPlayStatus();
 					}
 				}
 				break;
@@ -134,11 +142,15 @@ const internalFunctions = {
 				break;
 			case PlayStatus.CLOSE_SKAT:
 				if (store.cardsPlayedCount(Player.ME) == 2) {
-					store.status = PlayStatus.PLAY;
-					store.player = store.firstSeatPlayer;
+					this.setPlayStatus();
 				}
 				break;
 		}
+	},
+
+	setPlayStatus() {
+		store.status = PlayStatus.PLAY;
+		store.player = store.firstSeatPlayer;
 	}
 }
 

@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     choosePlayer() {
-      return [PlayStatus.SELECT_PLAYER].includes(this.store.status);
+      return [PlayStatus.SELECT_PLAYER, PlayStatus.SELECT_FIRST_SEAT].includes(this.store.status);
     }
   }
 }
