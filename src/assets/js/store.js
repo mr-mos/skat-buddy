@@ -94,6 +94,10 @@ export const storeFunctions = {
 		return player === store.player
 	},
 
+	isFirstSeat(player) {
+		return player === store.firstSeatPlayer
+	},
+
 	getSoloPlayer() {
 		return store.soloPlayer;
 	},

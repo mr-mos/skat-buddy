@@ -1,7 +1,7 @@
 <template>
 
   <div class="box bold" :class="moreCss(playerDef)" @click="playerClicked()" :style="style">
-    {{ playerText[playerName] }} ({{ countKnownCards(playerDef) }})
+    <small>{{ firstSeat }}</small>   {{ playerText[playerName] }} ({{ countKnownCards }})
   </div>
 
 </template>
@@ -32,9 +32,6 @@ export default {
       }
       return cssDefs
     },
-    countKnownCards(player) {
-      return storeFunctions.countPlayerCars(player);
-    },
     playerClicked() {
       storeFunctions.playerClickedAction(this.playerDef);
     }
@@ -50,7 +47,12 @@ export default {
       } else {
         return this.orderPos ? "order:" + this.orderPos : "";
       }
-
+    },
+    countKnownCards() {
+      return storeFunctions.countPlayerCars(this.playerDef);
+    },
+    firstSeat() {
+      return storeFunctions.isFirstSeat(this.playerDef) ? "[V]" : '';
     }
   }
 }
