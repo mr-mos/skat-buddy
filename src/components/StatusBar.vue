@@ -19,9 +19,11 @@
 
     <div class="noWrap">
       <span>Spieler: </span>
-      <StatusBarPlayer :player-def="Player.LEFT" :clickable="choosePlayer" />
-      <StatusBarPlayer :player-def="Player.ME" :clickable="choosePlayer" />
-      <StatusBarPlayer :player-def="Player.RIGHT" :clickable="choosePlayer" />
+      <div class="playerArea">
+        <StatusBarPlayer :player-def="Player.ME" :clickable="choosePlayer" :orderPos="1"/>
+        <StatusBarPlayer :player-def="Player.LEFT" :clickable="choosePlayer" :orderPos="2"/>
+        <StatusBarPlayer :player-def="Player.RIGHT" :clickable="choosePlayer" orderPos="3"/>
+      </div>
     </div>
 
   </div>
@@ -84,6 +86,11 @@ export default {
 .handButton {
   background-color: #a03e3e;
   color: white;
+}
+
+.statusBar .playerArea {
+  display: inline-flex;
+  align-items: center;
 }
 
 

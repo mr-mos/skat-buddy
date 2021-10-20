@@ -1,6 +1,6 @@
 <template>
 
-  <div class="box bold" :class="moreCss(playerDef)" @click="playerClicked()">
+  <div class="box bold" :class="moreCss(playerDef)" @click="playerClicked()" :style="style">
     {{ playerText[playerName] }} ({{ countKnownCards(playerDef) }})
   </div>
 
@@ -15,7 +15,7 @@ import {storeFunctions} from "@/assets/js/store";
 
 export default {
   name: 'Statusbar',
-  props: ['playerDef','clickable'],
+  props: ['playerDef', 'clickable', 'orderPos'],
   data() {
     return {
       Player,
@@ -26,7 +26,7 @@ export default {
   methods: {
     moreCss(player) {
       let cssDefs = storeFunctions.isActivePlayer(player) ? 'selected ' : '';
-      cssDefs += this.playerName.toLowerCase() +"Player ";
+      cssDefs += this.playerName.toLowerCase() + "Player ";
       if (this.clickable) {
         cssDefs += "clickable";
       }
@@ -39,7 +39,20 @@ export default {
       storeFunctions.playerClickedAction(this.playerDef);
     }
   },
-  computed: {}
+  computed: {
+    style() {
+      if (storeFunctions.getSoloPlayer()) {
+        if (storeFunctions.getSoloPlayer() == this.playerDef) {
+          return "order: 1; margin-right:20px;";
+        } else {
+          return "order: " + this.orderPos + 1;
+        }
+      } else {
+        return this.orderPos ? "order:" + this.orderPos : "";
+      }
+
+    }
+  }
 }
 
 </script>
@@ -53,7 +66,6 @@ export default {
   border: 2px solid red;
   color: red;
 }
-
 
 
 </style>

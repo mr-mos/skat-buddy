@@ -91,6 +91,10 @@ export const storeFunctions = {
 		return player === store.player
 	},
 
+	getSoloPlayer() {
+		return store.soloPlayer;
+	},
+
 	getPlayersName(player) {
 		return Object.keys(Player).find(key => Player[key] === player)
 	}
