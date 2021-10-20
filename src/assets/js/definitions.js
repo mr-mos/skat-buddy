@@ -13,8 +13,8 @@ const PlayStatus = Object.freeze(
 
 const Player = Object.freeze(
 	{
-		"LEFT": 1,
-		"ME": 2,
+		"ME": 1,
+		"LEFT": 2,
 		"RIGHT": 3
 	}
 )
@@ -29,7 +29,7 @@ class PlayingCard {
 
 	reset() {
 		this.owner = null;
-		this.trump = false;
+		this.trump = (this.value === 'jack') ? true : false;   // Jacks are trump per default  (need to be changed for null-games)
 		this.played = false;
 	}
 
@@ -44,9 +44,6 @@ function createNewPlayingCards() {
 	cardColors.forEach(cardColor =>
 		cardValues.forEach(cardValue => {
 				let card = new PlayingCard(cardColor.name, cardValue.value);
-				if (card.value === 'jack') {              // Jacks are trump per default  (need to be changed for null-games)
-					card.trump = true;
-				}
 				cards.push(card);
 			}
 		)

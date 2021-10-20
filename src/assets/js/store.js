@@ -11,6 +11,8 @@ export const store = {
 
 	firstSeatPlayer: null,
 
+	gameCounter: 1,
+
 	cards: createNewPlayingCards(),
 
 	statusName() {
@@ -31,12 +33,14 @@ export const store = {
 
 export const storeFunctions = {
 
-	resetStoreStatus() {
+	resetStoreStatus(includeFirstSeatPlayer=false) {
 		store.cards.forEach(card => card.reset());
-		store.status = PlayStatus.SELECT_MY_CARDS;
-		store.player = Player.ME;
 		store.soloPlayer = null;
-		store.firstSeatPlayer = null;
+		store.player = null;
+		store.gameCounter++;
+		store.status = PlayStatus.SELECT_FIRST_SEAT;
+		store.firstSeatPlayer =  (store.firstSeatPlayer != null && includeFirstSeatPlayer) ? (store.firstSeatPlayer % 3) + 1 : null;
+		internalFunctions.checkStatus();
 	},
 
 	cardClickedAction(card) {

@@ -4,17 +4,16 @@
 
 
     <div class="noWrap paddingRight">
-      <StatusBarText :store="store" />
+      <StatusBarText :store="store"/>
     </div>
 
 
     <div class="noWrap paddingRight">
-        <div v-if="store.status == PlayStatus.OPEN_SKAT && storeFunctions.countPlayerCars(Player.ME) == 10">
-          <div class="box clickable handButton"  @click="storeFunctions.handGameClicked()">
-            Hand-Spiel
-          </div>
-
+      <div v-if="store.status == PlayStatus.OPEN_SKAT && storeFunctions.countPlayerCars(Player.ME) == 10">
+        <div class="box clickable handButton" @click="storeFunctions.handGameClicked()">
+          Hand-Spiel
         </div>
+      </div>
     </div>
 
     <div class="noWrap">
@@ -26,6 +25,19 @@
       </div>
     </div>
 
+    <div class="noWrap floatRight">
+      <div v-if="store.status == PlayStatus.SELECT_MY_CARDS && store.firstSeatPlayer && storeFunctions.countPlayerCars(Player.ME) == 0"
+           class="box clickable nextGameButton" @click="storeFunctions.resetStoreStatus(false)">
+        Neue Vorhand/Spiel
+      </div>
+      <div v-else
+          class="box clickable nextGameButton" @click="storeFunctions.resetStoreStatus(true)">
+        Neues Spiel
+      </div>
+      Spiel Nr. {{ store.gameCounter }}
+    </div>
+
+
   </div>
 
 </template>
@@ -34,7 +46,7 @@
 
 <script>
 
-import {Player, PlayStatus } from '@/assets/js/definitions';
+import {Player, PlayStatus} from '@/assets/js/definitions';
 import {storeFunctions} from '@/assets/js/store';
 import StatusBarPlayer from "@/components/StatusBarPlayer";
 import StatusBarText from "@/components/StatusBarText";
@@ -83,14 +95,22 @@ export default {
   padding-right: 20px;
 }
 
+.statusBar .playerArea {
+  display: inline-flex;
+  align-items: center;
+}
+
 .handButton {
   background-color: #a03e3e;
   color: white;
 }
 
-.statusBar .playerArea {
-  display: inline-flex;
-  align-items: center;
+.nextGameButton {
+  background-color: #666666;
+  color: white;
+  font-size: 10px;
+  padding: 3px 7px;
+  margin: 6px 6px;
 }
 
 
