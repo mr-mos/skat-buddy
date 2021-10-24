@@ -75,22 +75,10 @@ const cardColors = [
 const cardValues = [
 	// TODO  use an JS object-definition instead of a map here and deal with "trump"; e.g. rankingNormal + 10
 	{
-		value: '7',
-		scoreValue: 0,
-		rankingNormal: 0,
-		rankingNull: 0,
-	},
-	{
-		value:'8',
-		scoreValue: 0,
-		rankingNormal: 1,
-		rankingNull: 1,
-	},
-	{
-		value:'9',
-		scoreValue: 0,
-		rankingNormal: 2,
-		rankingNull: 2,
+		value:'ace',
+		scoreValue: 11,
+		rankingNormal: 6,
+		rankingNull: 7
 	},
 	{
 		value:'10',
@@ -99,10 +87,10 @@ const cardValues = [
 		rankingNull: 3,
 	},
 	{
-		value:'jack',
-		scoreValue: 2,
-		rankingNormal: 70,
-		rankingNull: 4,
+		value:'king',
+		scoreValue: 4,
+		rankingNormal: 5,
+		rankingNull: 6,
 	},
 	{
 		value:'queen',
@@ -111,16 +99,28 @@ const cardValues = [
 		rankingNull: 5,
 	},
 	{
-		value:'king',
-		scoreValue: 4,
-		rankingNormal: 5,
-		rankingNull: 6,
+		value:'jack',
+		scoreValue: 2,
+		rankingNormal: 70,
+		rankingNull: 4,
 	},
 	{
-		value:'ace',
-		scoreValue: 11,
-		rankingNormal: 6,
-		rankingNull: 7
+		value:'9',
+		scoreValue: 0,
+		rankingNormal: 2,
+		rankingNull: 2,
+	},
+	{
+		value:'8',
+		scoreValue: 0,
+		rankingNormal: 1,
+		rankingNull: 1,
+	},
+	{
+		value: '7',
+		scoreValue: 0,
+		rankingNormal: 0,
+		rankingNull: 0,
 	}
 ]
 
