@@ -64,7 +64,7 @@ export default {
 }
 
 .leftCardFilter {
-  filter: invert(77%) sepia(66%) saturate(545%) hue-rotate(246deg) brightness(87%) contrast(95%);
+  filter: brightness(0.48) sepia(75%) hue-rotate(-90deg) saturate(3) contrast(87%);
   border: 1px solid #da87da;
   box-sizing: border-box;
 }
@@ -76,13 +76,13 @@ export default {
 }
 
 .rightCardFilter {
-  filter: invert(86%) sepia(24%) saturate(331%) hue-rotate(157deg) brightness(92%) contrast(96%);
-  border: 1px solid lightblue;
+  filter: brightness(0.5) sepia(75%) hue-rotate(140deg) saturate(3) contrast(87%);
+  border: 1px solid #c9dfee;
   box-sizing: border-box;
 }
 
 .disabled {
-  opacity: 30%;
+  opacity: 20%;
 }
 
 

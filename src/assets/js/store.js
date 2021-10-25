@@ -78,6 +78,19 @@ export const storeFunctions = {
 					);
 				}
 				break;
+			case PlayStatus.PLAY:
+				if (card.played) {
+					alert("Die Karte wurde schon gespielt!")
+				} else if (card.owner && card.owner !== store.player) {
+					alert("Die Karte gehört "+storeFunctions.getPlayersName(card.owner)+ " und kann nicht von "+storeFunctions.getPlayersName(store.player)+" gespielt werden.");
+				} else if (store.player === Player.ME && card.owner !== store.player) {
+					alert("Du kannst nur deine eigenen Karten spielen!")
+				} else {
+					card.played = true;
+					card.owner = store.player;
+					store.player = (store.player % 3) + 1
+				}
+				break;
 			default:
 				alert("cardClickedAction not defined for status '" + store.statusName() + "' and card: " + card.name());
 		}
@@ -99,7 +112,7 @@ export const storeFunctions = {
 	},
 
 	handGameClicked() {
-		internalFunctions.setPlayStatus();
+		store.status = PlayStatus.SELECT_TRUMP;
 	},
 
 
