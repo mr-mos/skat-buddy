@@ -1,4 +1,4 @@
-import {createNewPlayingCards, Player, PlayStatus} from "@/assets/js/definitions";
+import {createNewPlayingCards, Player, PlayOptions, PlayStatus} from "@/assets/js/definitions";
 
 
 export const store = {
@@ -8,6 +8,8 @@ export const store = {
 	player: null,            // how needs to do an action currently
 
 	soloPlayer: null,             // "Alleinspieler" in current round
+
+	selectedTrump: null,            // from PlayOptions
 
 	firstSeatPlayer: null,
 
@@ -33,13 +35,13 @@ export const store = {
 
 export const storeFunctions = {
 
-	resetStoreStatus(includeFirstSeatPlayer=false) {
+	resetStoreStatus(includeFirstSeatPlayer = false) {
 		store.cards.forEach(card => card.reset());
 		store.soloPlayer = null;
 		store.player = null;
 		store.gameCounter++;
 		store.status = PlayStatus.SELECT_FIRST_SEAT;
-		store.firstSeatPlayer =  (store.firstSeatPlayer != null && includeFirstSeatPlayer) ? (store.firstSeatPlayer % 3) + 1 : null;
+		store.firstSeatPlayer = (store.firstSeatPlayer != null && includeFirstSeatPlayer) ? (store.firstSeatPlayer % 3) + 1 : null;
 		internalFunctions.checkStatus();
 	},
 
@@ -61,6 +63,19 @@ export const storeFunctions = {
 			case PlayStatus.CLOSE_SKAT:
 				if (card.owner === Player.ME) {
 					card.played = true;
+				}
+				break;
+			case PlayStatus.SELECT_TRUMP:
+				if (card.value === 'jack') {
+					store.selectedTrump = PlayOptions.GRAND;
+				} else {
+					store.selectedTrump = card.color;
+					store.cards.forEach(card => {
+							if (card.color === store.selectedTrump) {
+								card.trump = true;
+							}
+						}
+					);
 				}
 				break;
 			default:
@@ -108,6 +123,24 @@ export const storeFunctions = {
 
 	getPlayersName(player) {
 		return Object.keys(Player).find(key => Player[key] === player)
+	},
+
+
+	/////////////// Others ////////////////////
+
+	translatePlayOption(playOption) {
+		switch (playOption) {
+			case PlayOptions.CLUB:
+				return "Kreuz";
+			case PlayOptions.SPADE:
+				return "Pik";
+			case PlayOptions.HEART:
+				return "Herz";
+			case PlayOptions.DIAMOND:
+				return "Karo";
+			case PlayOptions.GRAND:
+				return "Grand";
+		}
 	}
 
 }
@@ -139,7 +172,7 @@ const internalFunctions = {
 						store.status = PlayStatus.OPEN_SKAT;
 						store.player = Player.ME;
 					} else {
-						this.setPlayStatus();
+						store.status = PlayStatus.SELECT_TRUMP;
 					}
 				}
 				break;
@@ -150,6 +183,11 @@ const internalFunctions = {
 				break;
 			case PlayStatus.CLOSE_SKAT:
 				if (store.cardsPlayedCount(Player.ME) == 2) {
+					store.status = PlayStatus.SELECT_TRUMP;
+				}
+				break;
+			case PlayStatus.SELECT_TRUMP:
+				if (store.selectedTrump) {
 					this.setPlayStatus();
 				}
 				break;

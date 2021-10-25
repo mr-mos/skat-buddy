@@ -19,8 +19,11 @@
       <template v-else-if="store.status === PlayStatus.CLOSE_SKAT">
         zwei Skat-Karten drücken
       </template>
+      <template v-else-if="store.status === PlayStatus.SELECT_TRUMP">
+        Welches Spiel? Wähle die Trumpf-Farbe / Grand.. (Erste Karte in Reihe anklicken) ...
+      </template>
       <template v-else-if="store.status === PlayStatus.PLAY">
-        Gespielte Karten klicken ...
+        Spiel "{{storeFunctions.translatePlayOption(store.selectedTrump)}}" läuft. Karten klicken ...
       </template>
       <template v-else="" class="error">
         Unbekannt!
@@ -36,13 +39,15 @@
 <script>
 
 import {PlayStatus} from '@/assets/js/definitions';
+import {storeFunctions} from '@/assets/js/store';
 
 export default {
   name: 'StatusBarText',
   props: ['store'],
   data() {
     return {
-      PlayStatus
+      PlayStatus,
+      storeFunctions
     }
   },
   methods: {

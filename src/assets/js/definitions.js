@@ -1,4 +1,4 @@
-export {PlayingCard, createNewPlayingCards, PlayStatus, Player};
+export {PlayingCard, createNewPlayingCards, PlayStatus, Player, PlayOptions};
 
 const PlayStatus = Object.freeze(
 	{
@@ -7,7 +7,8 @@ const PlayStatus = Object.freeze(
 		"SELECT_PLAYER": 3,
 		"OPEN_SKAT": 4,
 		"CLOSE_SKAT": 5,
-		"PLAY" : 6
+		"SELECT_TRUMP" : 6,
+		"PLAY" : 7
 	}
 )
 
@@ -18,6 +19,18 @@ const Player = Object.freeze(
 		"RIGHT": 3
 	}
 )
+
+const PlayOptions = Object.freeze(
+	{
+		CLUB: "club",
+		SPADE: "spade",
+		HEART: "heart",
+		DIAMOND: "diamond",
+		GRAND: "grand"
+		// NULL not implemented yet
+	}
+)
+
 
 class PlayingCard {
 	constructor(color, value) {
@@ -41,9 +54,9 @@ class PlayingCard {
 
 function createNewPlayingCards() {
 	let cards = [];
-	cardColors.forEach(cardColor =>
+	[PlayOptions.CLUB,PlayOptions.SPADE, PlayOptions.HEART, PlayOptions.DIAMOND].forEach(cardColor =>
 		cardValues.forEach(cardValue => {
-				let card = new PlayingCard(cardColor.name, cardValue.value);
+				let card = new PlayingCard(cardColor, cardValue.value);
 				cards.push(card);
 			}
 		)
@@ -52,21 +65,27 @@ function createNewPlayingCards() {
 }
 
 
-const cardColors = [
+
+// eslint-disable-next-line no-unused-vars
+const cardColorPoints = [
 	{
-		name: 'club',
+		name: PlayOptions.GRAND,
+		baseValue: 24
+	},
+	{
+		name: PlayOptions.CLUB,
 		baseValue: 12
 	},
 	{
-		name: 'spade',
+		name: PlayOptions.SPADE,
 		baseValue: 11
 	},
 	{
-		name: 'heart',
+		name: PlayOptions.HEART,
 		baseValue: 10
 	},
 	{
-		name: 'diamond',
+		name: PlayOptions.DIAMOND,
 		baseValue: 9
 	}
 ]

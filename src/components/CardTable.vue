@@ -5,27 +5,27 @@
     <div class="rowLabel">
       Trumpf
     </div>
-    <CardRow v-bind:row-cards="trumpCards"/>
+    <CardRow v-bind:row-cards="trumpCards" v-if="trumpCards.length>0"/>
 
     <div class="rowLabel">
       Kreuz
     </div>
-    <CardRow :row-cards="clubCards"/>
+    <CardRow :row-cards="clubCards" v-if="clubCards.length>0"/>
 
     <div class="rowLabel">
       Pik
     </div>
-    <CardRow :row-cards="spadeCards"/>
+    <CardRow :row-cards="spadeCards" v-if="spadeCards.length>0"/>
 
     <div class="rowLabel">
       Herz
     </div>
-    <CardRow :row-cards="heartCards"/>
+    <CardRow :row-cards="heartCards" v-if="heartCards.length>0"/>
 
     <div class="rowLabel">
       Karo
     </div>
-    <CardRow :row-cards="diamondCards"/>
+    <CardRow :row-cards="diamondCards" v-if="diamondCards.length>0"/>
 
   </div>
 
