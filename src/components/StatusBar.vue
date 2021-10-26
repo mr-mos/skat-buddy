@@ -16,13 +16,24 @@
       </div>
     </div>
 
-    <div class="noWrap">
+    <div class="noWrap paddingRight">
       <span>Spieler: </span>
       <div class="playerArea">
         <StatusBarPlayer :player-def="Player.ME" :clickable="choosePlayer" :orderPos="1"/>
         <StatusBarPlayer :player-def="Player.LEFT" :clickable="choosePlayer" :orderPos="2"/>
         <StatusBarPlayer :player-def="Player.RIGHT" :clickable="choosePlayer" orderPos="3"/>
       </div>
+    </div>
+
+    <div class="noWrap" v-if="[PlayStatus.PLAY, PlayStatus.END].includes(store.status)">
+      <span>Punkte: </span>
+      <span class="points" :class="meSolo">
+        {{ storeFunctions.getPointsSoloplayer() }}
+      </span>
+      |
+      <span class="points" :class="meNotSolo">
+        {{ storeFunctions.getPointsOthers() }}
+      </span>
     </div>
 
     <div class="noWrap floatRight">
@@ -68,6 +79,12 @@ export default {
   computed: {
     choosePlayer() {
       return [PlayStatus.SELECT_PLAYER, PlayStatus.SELECT_FIRST_SEAT].includes(this.store.status);
+    },
+    meSolo() {
+      return storeFunctions.getSoloPlayer() === Player.ME ? 'bold' : 'gray';
+    },
+    meNotSolo() {
+      return storeFunctions.getSoloPlayer() !== Player.ME ? 'bold' : 'gray';
     }
   }
 }
@@ -111,6 +128,15 @@ export default {
   font-size: 10px;
   padding: 3px 7px;
   margin: 6px 6px;
+}
+
+.points {
+  min-width: 20px;
+  padding: 0 5px;
+}
+
+.gray {
+  color: #d4d4d4;
 }
 
 

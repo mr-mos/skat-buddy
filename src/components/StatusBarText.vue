@@ -25,6 +25,9 @@
       <template v-else-if="store.status === PlayStatus.PLAY">
         Spiel "{{storeFunctions.translatePlayOption(store.selectedTrump)}}" läuft. Karten klicken ...
       </template>
+      <template v-else-if="store.status === PlayStatus.END">
+        Spiel beendet!
+      </template>
       <template v-else="" class="error">
         Unbekannt!
       </template>

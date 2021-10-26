@@ -9,11 +9,13 @@ export const store = {
 
 	soloPlayer: null,             // "Alleinspieler" in current round
 
-	selectedTrump: null,            // from PlayOptions
+	selectedTrump: null,          // from PlayOptions
 
 	firstSeatPlayer: null,
 
 	gameCounter: 1,
+
+	roundCards: [],             // cards played in this round (0 to 3 cards)
 
 	cards: createNewPlayingCards(),
 
@@ -42,6 +44,7 @@ export const storeFunctions = {
 		store.gameCounter++;
 		store.status = PlayStatus.SELECT_FIRST_SEAT;
 		store.firstSeatPlayer = (store.firstSeatPlayer != null && includeFirstSeatPlayer) ? (store.firstSeatPlayer % 3) + 1 : null;
+		store.roundCards = [];
 		internalFunctions.checkStatus();
 	},
 
@@ -77,18 +80,23 @@ export const storeFunctions = {
 						}
 					);
 				}
+				internalFunctions.increaseRankingForTrumpCards();
 				break;
 			case PlayStatus.PLAY:
 				if (card.played) {
 					alert("Die Karte wurde schon gespielt!")
 				} else if (card.owner && card.owner !== store.player) {
-					alert("Die Karte gehört "+storeFunctions.getPlayersName(card.owner)+ " und kann nicht von "+storeFunctions.getPlayersName(store.player)+" gespielt werden.");
+					alert("Die Karte gehört " + storeFunctions.getPlayersName(card.owner) + " und kann nicht von " + storeFunctions.getPlayersName(store.player) + " gespielt werden.");
 				} else if (store.player === Player.ME && card.owner !== store.player) {
 					alert("Du kannst nur deine eigenen Karten spielen!")
 				} else {
 					card.played = true;
 					card.owner = store.player;
 					store.player = (store.player % 3) + 1
+					store.roundCards.push(card);
+					if (store.roundCards.length === 3) {
+						internalFunctions.setRoundWinner();
+					}
 				}
 				break;
 			default:
@@ -140,6 +148,14 @@ export const storeFunctions = {
 
 
 	/////////////// Others ////////////////////
+
+	getPointsSoloplayer() {
+		return store.cards.filter(card => card.played && card.owner === store.soloPlayer).reduce((sum, prevCard) => sum + prevCard.scoreValue, 0);
+	},
+
+	getPointsOthers() {
+		return store.cards.filter(card => card.played && card.owner != null && card.owner !== store.soloPlayer).reduce((sum, prevCard) => sum + prevCard.scoreValue, 0);
+	},
 
 	translatePlayOption(playOption) {
 		switch (playOption) {
@@ -204,12 +220,40 @@ const internalFunctions = {
 					this.setPlayStatus();
 				}
 				break;
+			case PlayStatus.PLAY:
+				// nextmos  count 10 rounds --> 2 scart cards may not be played if ME is not playing
+				if (store.cards.find(card => !card.played)) {
+					store.status = PlayStatus.END
+				}
+				break;
 		}
 	},
 
 	setPlayStatus() {
 		store.status = PlayStatus.PLAY;
 		store.player = store.firstSeatPlayer;
+	},
+
+	increaseRankingForTrumpCards() {
+		store.cards.forEach(card => {
+				if (card.trump) {
+					card.ranking = card.baseRanking + 10;
+				}
+			}
+		);
+	},
+
+	setRoundWinner() {
+		if (store.roundCards.length !== 3) {
+			console.error("Three cards need to be played")
+			return;
+		}
+		// nextmos  calc winner of the round
+		let highestCard = Math.max.apply(Math, store.roundCards.map(c => c.ranking));
+		console.log("Test: "+highestCard);
+
+		store.roundCards = [];
 	}
+
 }
 

@@ -8,7 +8,8 @@ const PlayStatus = Object.freeze(
 		"OPEN_SKAT": 4,
 		"CLOSE_SKAT": 5,
 		"SELECT_TRUMP" : 6,
-		"PLAY" : 7
+		"PLAY" : 7,
+		"END" : 8
 	}
 )
 
@@ -33,22 +34,27 @@ const PlayOptions = Object.freeze(
 
 
 class PlayingCard {
-	constructor(color, value) {
+	constructor(color, value, score, ranking) {
 		this.color = color;
 		this.value = value;
+		this.scoreValue = score;
+		this.baseRanking = ranking;
 		this.reset();
 		//  Object.seal(this);      CAUTION:  This breaks the reactivity in Vue.js if used as data in components
 	}
 
 	reset() {
-		this.owner = null;
-		this.trump = (this.value === 'jack') ? true : false;   // Jacks are trump per default  (need to be changed for null-games)
+		this.owner = null;                  // primary owner when given the cards
 		this.played = false;
+		this.wonPlayer = null;              // owner after a "round" was made
+		this.trump = (this.value === 'jack') ? true : false;   // Jacks are trump per default  (need to be changed for null-games)
+		this.ranking = this.baseRanking;
 	}
 
 	name() {
 		return this.color+" "+this.value;
 	}
+
 }
 
 
@@ -56,7 +62,7 @@ function createNewPlayingCards() {
 	let cards = [];
 	[PlayOptions.CLUB,PlayOptions.SPADE, PlayOptions.HEART, PlayOptions.DIAMOND].forEach(cardColor =>
 		cardValues.forEach(cardValue => {
-				let card = new PlayingCard(cardColor, cardValue.value);
+				let card = new PlayingCard(cardColor, cardValue.value, cardValue.scoreValue, cardValue.rankingNormal);
 				cards.push(card);
 			}
 		)
@@ -92,7 +98,6 @@ const cardColorPoints = [
 
 
 const cardValues = [
-	// TODO  use an JS object-definition instead of a map here and deal with "trump"; e.g. rankingNormal + 10
 	{
 		value:'ace',
 		scoreValue: 11,
