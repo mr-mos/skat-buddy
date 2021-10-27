@@ -15,6 +15,8 @@ export const store = {
 
 	gameCounter: 1,
 
+	roundCount: 0,
+
 	roundCards: [],             // cards played in this round (0 to 3 cards)
 
 	cards: createNewPlayingCards(),
@@ -45,6 +47,7 @@ export const storeFunctions = {
 		store.status = PlayStatus.SELECT_FIRST_SEAT;
 		store.firstSeatPlayer = (store.firstSeatPlayer != null && includeFirstSeatPlayer) ? (store.firstSeatPlayer % 3) + 1 : null;
 		store.roundCards = [];
+		store.roundCount = 0;
 		internalFunctions.checkStatus();
 	},
 
@@ -221,8 +224,7 @@ const internalFunctions = {
 				}
 				break;
 			case PlayStatus.PLAY:
-				// nextmos  count 10 rounds --> 2 scart cards may not be played if ME is not playing
-				if (store.cards.find(card => !card.played)) {
+				if (store.roundCount == 10) {
 					store.status = PlayStatus.END
 				}
 				break;
@@ -253,6 +255,7 @@ const internalFunctions = {
 		console.log("Test: "+highestCard);
 
 		store.roundCards = [];
+		store.roundCount++;
 	}
 
 }
