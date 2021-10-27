@@ -153,11 +153,11 @@ export const storeFunctions = {
 	/////////////// Others ////////////////////
 
 	getPointsSoloplayer() {
-		return store.cards.filter(card => card.played && card.owner === store.soloPlayer).reduce((sum, prevCard) => sum + prevCard.scoreValue, 0);
+		return store.cards.filter(card => card.wonPlayer === store.soloPlayer).reduce((sum, prevCard) => sum + prevCard.scoreValue, 0);
 	},
 
 	getPointsOthers() {
-		return store.cards.filter(card => card.played && card.owner != null && card.owner !== store.soloPlayer).reduce((sum, prevCard) => sum + prevCard.scoreValue, 0);
+		return store.cards.filter(card => card.wonPlayer != null && card.wonPlayer !== store.soloPlayer).reduce((sum, prevCard) => sum + prevCard.scoreValue, 0);
 	},
 
 	translatePlayOption(playOption) {
@@ -251,10 +251,18 @@ const internalFunctions = {
 			console.error("Three cards need to be played")
 			return;
 		}
-		// nextmos  calc winner of the round
-		let highestCard = Math.max.apply(Math, store.roundCards.map(c => c.ranking));
-		console.log("Test: "+highestCard);
-
+		let firstCard = store.roundCards[0];
+		store.roundCards.sort((a,b) => b.ranking - a.ranking);
+		let winner;
+		if (store.roundCards[0].trump) {
+			winner = store.roundCards[0];           // trump always wins
+		} else {
+			winner = store.roundCards.find( c => c.color === firstCard.color);   // highest card with round-color wins
+		}
+		store.roundCards.forEach(card =>
+			card.wonPlayer = winner.owner
+		);
+		console.log("Winner: "+storeFunctions.getPlayersName(winner.owner));
 		store.roundCards = [];
 		store.roundCount++;
 	}
