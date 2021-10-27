@@ -243,6 +243,7 @@ const internalFunctions = {
 				}
 			}
 		);
+		store.cards.sort((a,b) => b.ranking - a.ranking)
 	},
 
 	setRoundWinner() {
