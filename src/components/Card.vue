@@ -89,7 +89,7 @@ export default {
 }
 
 .disabled {
-  opacity: 20%;
+  opacity: 0.2;
 }
 
 .roundOverlay {
@@ -98,7 +98,7 @@ export default {
   bottom: 1px;
   padding: 5px 10px;
   font-weight: bold;
-  opacity: 75%;
+  opacity: 0.75;
 }
 
 
