@@ -69,6 +69,7 @@ export const storeFunctions = {
 			case PlayStatus.CLOSE_SKAT:
 				if (card.owner === Player.ME) {
 					card.played = true;
+					card.wonPlayer = Player.ME;
 				}
 				break;
 			case PlayStatus.SELECT_TRUMP:
@@ -96,7 +97,7 @@ export const storeFunctions = {
 					card.played = true;
 					card.owner = store.player;
 					store.roundCards.push(card);
-					console.log("Round Nr:"+store.roundCount+ " & cards: "+store.roundCards.map(c=>c.toString()).join("   "))
+					console.log("Round Nr:" + store.roundCount + " & cards: " + store.roundCards.map(c => c.toString()).join("   "))
 					if (store.roundCards.length === 3) {
 						let currentWinner = internalFunctions.setRoundWinner();
 						store.player = currentWinner
@@ -228,7 +229,8 @@ const internalFunctions = {
 				break;
 			case PlayStatus.PLAY:
 				if (store.roundCount == 10) {
-					store.status = PlayStatus.END
+					store.status = PlayStatus.END;
+					this.assignUnkownSkat();
 				}
 				break;
 		}
@@ -249,7 +251,7 @@ const internalFunctions = {
 				}
 			}
 		);
-		store.cards.sort((a,b) => b.ranking - a.ranking)
+		store.cards.sort((a, b) => b.ranking - a.ranking)
 	},
 
 	setRoundWinner() {
@@ -258,20 +260,32 @@ const internalFunctions = {
 			return;
 		}
 		let firstCard = store.roundCards[0];
-		store.roundCards.sort((a,b) => b.ranking - a.ranking);      // sort cards in ranking order
+		store.roundCards.sort((a, b) => b.ranking - a.ranking);      // sort cards in ranking order
 		let winnerCard;
 		if (store.roundCards[0].trump) {
 			winnerCard = store.roundCards[0];           // trump always wins
 		} else {
-			winnerCard = store.roundCards.find( c => c.color === firstCard.color);   // highest card with round-color wins
+			winnerCard = store.roundCards.find(c => c.color === firstCard.color);   // highest card with round-color wins
 		}
 		store.roundCards.forEach(card =>
 			card.wonPlayer = winnerCard.owner
 		);
-		console.log("Winner: "+storeFunctions.getPlayersName(winnerCard.owner)+ "  (Points:"+store.roundCards.reduce((sum, prevCard) => sum + prevCard.scoreValue, 0)+")");
+		console.log("Winner: " + storeFunctions.getPlayersName(winnerCard.owner) + "  (Points:" + store.roundCards.reduce((sum, prevCard) => sum + prevCard.scoreValue, 0) + ")");
 		store.roundCards = [];
 		store.roundCount++;
 		return winnerCard.owner;
+	},
+
+	assignUnkownSkat() {
+		let notPlayedCards = store.cards.filter(card => !card.played)
+		if (notPlayedCards.length == 2) {
+			notPlayedCards.forEach(card => {
+					card.played = true;
+					card.owner = store.soloPlayer;
+					card.wonPlayer = storeFunctions.getSoloPlayer();
+				}
+			)
+		}
 	}
 
 }
