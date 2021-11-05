@@ -1,6 +1,9 @@
 <template>
   <div class="playingCard">
     <img :src="imagePath" @click="clicked" :class="cardBackground"/>
+    <div v-if="this.card.wonPlayer" class="roundOverlay" :class="wonRoundCharColorClass">
+      {{this.card.played}}
+    </div>
   </div>
 </template>
 
@@ -44,6 +47,9 @@ export default {
           break;
       }
       return classes;
+    },
+    wonRoundCharColorClass() {
+      return storeFunctions.getPlayersName(this.card.wonPlayer).toLowerCase()+"Player"
     }
   }
 }
@@ -56,6 +62,7 @@ export default {
 
 .playingCard {
   height: 100%; /* responsive scale of images in height (part 2)*/
+  position: relative;
 }
 
 .playingCard img {
@@ -83,6 +90,15 @@ export default {
 
 .disabled {
   opacity: 20%;
+}
+
+.roundOverlay {
+  position: absolute;
+  left: 1px;
+  bottom: 1px;
+  padding: 5px 10px;
+  font-weight: bold;
+  opacity: 75%;
 }
 
 

@@ -15,7 +15,7 @@ export const store = {
 
 	gameCounter: 1,
 
-	roundCount: 0,
+	roundCount: 1,
 
 	roundCards: [],             // cards played in this round (0 to 3 cards)
 
@@ -47,7 +47,7 @@ export const storeFunctions = {
 		store.status = PlayStatus.SELECT_FIRST_SEAT;
 		store.firstSeatPlayer = (store.firstSeatPlayer != null && includeFirstSeatPlayer) ? (store.firstSeatPlayer % 3) + 1 : null;
 		store.roundCards = [];
-		store.roundCount = 0;
+		store.roundCount = 1;
 		internalFunctions.checkStatus();
 	},
 
@@ -68,7 +68,7 @@ export const storeFunctions = {
 				break;
 			case PlayStatus.CLOSE_SKAT:
 				if (card.owner === Player.ME) {
-					card.played = true;
+					card.played = "S";
 					card.wonPlayer = Player.ME;
 				}
 				break;
@@ -94,7 +94,7 @@ export const storeFunctions = {
 				} else if (store.player === Player.ME && card.owner !== store.player) {
 					alert("Du kannst nur deine eigenen Karten spielen!")
 				} else {
-					card.played = true;
+					card.played = store.roundCount;
 					card.owner = store.player;
 					store.roundCards.push(card);
 					console.log("Round Nr:" + store.roundCount + " & cards: " + store.roundCards.map(c => c.toString()).join("   "))
@@ -228,7 +228,7 @@ const internalFunctions = {
 				}
 				break;
 			case PlayStatus.PLAY:
-				if (store.roundCount == 10) {
+				if (store.roundCount == 11) {
 					store.status = PlayStatus.END;
 					this.assignUnkownSkat();
 				}
@@ -280,7 +280,7 @@ const internalFunctions = {
 		let notPlayedCards = store.cards.filter(card => !card.played)
 		if (notPlayedCards.length == 2) {
 			notPlayedCards.forEach(card => {
-					card.played = true;
+					card.played = "S";
 					card.owner = store.soloPlayer;
 					card.wonPlayer = storeFunctions.getSoloPlayer();
 				}

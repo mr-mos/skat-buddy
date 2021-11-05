@@ -47,7 +47,7 @@ class PlayingCard {
 
 	reset() {
 		this.owner = null;                  // primary owner when given the cards
-		this.played = false;
+		this.played = null;                // specifies the round-nr or "S" for skat if card was played
 		this.wonPlayer = null;              // owner after a "round" was made
 		this.trump = (this.value === 'jack') ? true : false;   // Jacks are trump per default  (need to be changed for null-games)
 		this.ranking = this.baseRanking;
