@@ -10,7 +10,7 @@ Check the status in the upper left and just click on the buttons and cards durin
 ## Try it
 
 You can test and use the skatbuddy here:
-TODO
+[//moscon.de/skatbuddy](https://www.moscon.de/skatbuddy/)
 
 ## Acknowlegement
 
