@@ -1,33 +1,21 @@
 # skatbuddy
 
+This is a simple Vue.js application that helps you to remember cards and points during a game.
+Check the status in the upper left and just click on the buttons and cards during the game.
+
+![](skatbuddy_screenshot.png)
+
+(TODO: Integrate a skat simulator that gives some playing advice)
+
+## Try it
+
+You can test and use the skatbuddy here:
+TODO
+
 ## Acknowlegement
 
 * Respect to the [Vue.js](https://vuejs.org/) team for creating such a nice SPA framework
 * Thanks to [vector-playing-cards](https://code.google.com/archive/p/vector-playing-cards/) for providing very nice open-source images of playing cards
+* To Mr. Mos for developing the stuff ;)  ([moscon.de](https://www.moscon.de/))
 
------
 
-#VUE stuff:
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
