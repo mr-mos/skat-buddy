@@ -95,10 +95,13 @@ export const storeFunctions = {
 				} else {
 					card.played = true;
 					card.owner = store.player;
-					store.player = (store.player % 3) + 1
 					store.roundCards.push(card);
+					console.log("Round Nr:"+store.roundCount+ " & cards: "+store.roundCards.map(c=>c.toString()).join("   "))
 					if (store.roundCards.length === 3) {
-						internalFunctions.setRoundWinner();
+						let currentWinner = internalFunctions.setRoundWinner();
+						store.player = currentWinner
+					} else {
+						store.player = (store.player % 3) + 1
 					}
 				}
 				break;
@@ -240,6 +243,9 @@ const internalFunctions = {
 		store.cards.forEach(card => {
 				if (card.trump) {
 					card.ranking = card.baseRanking + 10;
+					if (card.value === 'jack') {
+						card.ranking += [PlayOptions.DIAMOND, PlayOptions.HEART, PlayOptions.SPADE, PlayOptions.CLUB].indexOf(card.color);
+					}
 				}
 			}
 		);
@@ -252,19 +258,20 @@ const internalFunctions = {
 			return;
 		}
 		let firstCard = store.roundCards[0];
-		store.roundCards.sort((a,b) => b.ranking - a.ranking);
-		let winner;
+		store.roundCards.sort((a,b) => b.ranking - a.ranking);      // sort cards in ranking order
+		let winnerCard;
 		if (store.roundCards[0].trump) {
-			winner = store.roundCards[0];           // trump always wins
+			winnerCard = store.roundCards[0];           // trump always wins
 		} else {
-			winner = store.roundCards.find( c => c.color === firstCard.color);   // highest card with round-color wins
+			winnerCard = store.roundCards.find( c => c.color === firstCard.color);   // highest card with round-color wins
 		}
 		store.roundCards.forEach(card =>
-			card.wonPlayer = winner.owner
+			card.wonPlayer = winnerCard.owner
 		);
-		console.log("Winner: "+storeFunctions.getPlayersName(winner.owner));
+		console.log("Winner: "+storeFunctions.getPlayersName(winnerCard.owner)+ "  (Points:"+store.roundCards.reduce((sum, prevCard) => sum + prevCard.scoreValue, 0)+")");
 		store.roundCards = [];
 		store.roundCount++;
+		return winnerCard.owner;
 	}
 
 }

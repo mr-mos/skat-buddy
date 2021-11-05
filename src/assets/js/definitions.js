@@ -1,3 +1,5 @@
+import {storeFunctions} from "@/assets/js/store";
+
 export {PlayingCard, createNewPlayingCards, PlayStatus, Player, PlayOptions};
 
 const PlayStatus = Object.freeze(
@@ -55,6 +57,10 @@ class PlayingCard {
 		return this.color+" "+this.value;
 	}
 
+	toString() {
+		return "("+this.name()+")|ranking:"+this.ranking+ "|owner:"+storeFunctions.getPlayersName(this.owner)
+	}
+
 }
 
 
@@ -101,13 +107,13 @@ const cardValues = [
 	{
 		value:'ace',
 		scoreValue: 11,
-		rankingNormal: 6,
+		rankingNormal: 7,
 		rankingNull: 7
 	},
 	{
 		value:'10',
 		scoreValue: 10,
-		rankingNormal: 5,
+		rankingNormal: 6,
 		rankingNull: 3,
 	},
 	{
@@ -125,7 +131,7 @@ const cardValues = [
 	{
 		value:'jack',
 		scoreValue: 2,
-		rankingNormal: 70,
+		rankingNormal: 50,
 		rankingNull: 4,
 	},
 	{
