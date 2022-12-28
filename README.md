@@ -22,5 +22,5 @@ You can build it by yourself via ```npm run build```
 
 ## Empfehlung, falls Du IT-ler bist und Deutsch verstehst :)
 
-[Jobpushy.de](https://www.jobpushy.de/) -- IT-Jobs, die dich glücklich machen
+Von Entwicklern für Entwickler:   **[Jobpushy.de](https://www.jobpushy.de/)**  -- *IT-Jobs, die dich glücklich machen*
 
