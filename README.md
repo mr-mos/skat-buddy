@@ -20,7 +20,7 @@ You can build it by yourself via ```npm run build```
 * Thanks to [vector-playing-cards](https://code.google.com/archive/p/vector-playing-cards/) for providing very nice open-source images of playing cards
 * To Mr. Mos for developing the stuff ;)  ([moscon.de](https://www.moscon.de/))
 
-### Empfehlung, falls Du IT-ler bist und Deutsch verstehst :)
+## Empfehlung, falls Du IT-ler bist und Deutsch verstehst :)
 
-[Jobpushy.de](https://www.jobpushy.de/) -- IT-Jobs, die dich glücklich mache
+[Jobpushy.de](https://www.jobpushy.de/) -- IT-Jobs, die dich glücklich machen
 
