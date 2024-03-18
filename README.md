@@ -12,6 +12,10 @@ Check the status in the upper left and just click on the buttons and cards durin
 You can test and use the skatbuddy here:
 [//moscon.de/skatbuddy](https://www.moscon.de/skatbuddy/)
 
+You can build the project with NPM like this:
+`npm.cmd run build`  (and environment var `NODE_OPTIONS=--openssl-legacy-provider`)
+
+
 ## Acknowlegement
 
 * Respect to the [Vue.js](https://vuejs.org/) team for creating such a nice SPA framework
