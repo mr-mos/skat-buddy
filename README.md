@@ -13,7 +13,8 @@ You can test and use the skatbuddy here:
 [//moscon.de/skatbuddy](https://www.moscon.de/skatbuddy/)
 
 You can build the project with NPM like this:
-`npm.cmd run build`  (and environment var `NODE_OPTIONS=--openssl-legacy-provider`)
+
+`npm update` and `npm run build`  (and environment var `NODE_OPTIONS=--openssl-legacy-provider` in case of issues)
 
 
 ## Acknowlegement
